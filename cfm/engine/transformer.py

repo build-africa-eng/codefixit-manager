@@ -1,0 +1,33 @@
+import json
+import re
+from pathlib import Path
+
+def load_rules(rule_path):
+    with open(rule_path, "r", encoding="utf-8") as f:
+        return json.load(f)
+
+def apply_rules(file_paths, rule_path, dry_run=False):
+    rules = load_rules(rule_path)
+
+    for file_path in file_paths:
+        with open(file_path, "r", encoding="utf-8") as f:
+            content = f.read()
+
+        original = content
+
+        for rule in rules:
+            pattern = rule["match"]
+            replacement = rule["replace"]
+            content = re.sub(pattern, replacement, content)
+
+        if content != original:
+            print(f"✔ Matched in: {file_path}")
+            if dry_run:
+                print("⚠ Dry run only. No changes saved.")
+            else:
+                with open(file_path, "w", encoding="utf-8") as f:
+                    f.write(content)
+                print("✅ File updated.")
+
+        else:
+            print(f"⏩ No change: {file_path}")
