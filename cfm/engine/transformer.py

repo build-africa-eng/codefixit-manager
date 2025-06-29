@@ -6,7 +6,7 @@ def load_rules(rule_path):
     with open(rule_path, "r", encoding="utf-8") as f:
         return json.load(f)
 
-def apply_rules(file_paths, rule_path, dry_run=False):
+def apply_rules(file_paths, rule_path, dry_run=False, backup=False):
     rules = load_rules(rule_path)
     report = {
         "total_files_changed": 0,
