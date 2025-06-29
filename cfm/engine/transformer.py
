@@ -1,6 +1,7 @@
 import json
 import re
 from pathlib import Path
+from shutil import copyfile
 
 def load_rules(rule_path):
     with open(rule_path, "r", encoding="utf-8") as f:
@@ -40,6 +41,12 @@ def apply_rules(file_paths, rule_path, dry_run=False, backup=False):
             if dry_run:
                 print("⚠ Dry run only. No changes saved.")
             else:
+                # 🔐 Backup before overwrite
+                if backup:
+                    backup_path = file_path + ".bak"
+                    copyfile(file_path, backup_path)
+                    print(f"🗂️  Backup created: {backup_path}")
+
                 with open(file_path, "w", encoding="utf-8") as f:
                     f.write(content)
                 print("✅ File updated.")
