@@ -7,6 +7,8 @@ from cfm.engine.transformer import apply_rules
 def main():
     parser = argparse.ArgumentParser(description="CodeFixit Manager CLI")
     parser.add_argument("command", choices=["fix", "dry-run"], help="Action to perform")
+parser.add_argument("--backup", action="store_true",
+                        help="Create .bak backups before overwriting files")
     parser.add_argument("--lang", required=True, help="Programming language (e.g. cpp, python)")
     parser.add_argument("--rule", required=True, help="Name of the ruleset (e.g. qt5to6)")
     parser.add_argument("--path", required=True, help="Directory to process")
