@@ -10,6 +10,7 @@ def main():
 parser.add_argument("--backup", action="store_true",
                         help="Create .bak backups before overwriting files")
 
+parser.add_argument("--report", choices=["json"], help="Output report format")
     parser.add_argument("--lang", required=True, help="Programming language (e.g. cpp, python)")
     parser.add_argument("--rule", required=True, help="Name of the ruleset (e.g. qt5to6)")
 
@@ -51,6 +52,11 @@ parser.add_argument("--backup", action="store_true",
     elif args.check:
         print("\n✅ CodeFixIt check passed: no changes needed.")
         exit(0)
+
+# --- Optional: Export report ---
+    if args.report == "json":
+        import json
+        print(json.dumps(report, indent=2))
 
 if __name__ == "__main__":
     main()
