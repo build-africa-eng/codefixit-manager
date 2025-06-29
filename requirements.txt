@@ -1,1 +1,1 @@
-# Empty for now — only stdlib used
+pytest
