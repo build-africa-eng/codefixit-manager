@@ -24,7 +24,12 @@ parser.add_argument("--backup", action="store_true",
     files = collect_files(args.path, args.lang)
 
     # Apply rules and collect report
-    report = apply_rules(files, rules_path, dry_run=(args.command == "dry-run"))
+    report = apply_rules(
+        files,
+        rules_path,
+        dry_run=(args.command == "dry-run"),
+        backup=args.backup
+    )
 
     # --- Summary output ---
     print("\n📊 Summary Report")
