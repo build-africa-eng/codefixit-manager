@@ -11,6 +11,14 @@ parser.add_argument("--backup", action="store_true",
                         help="Create .bak backups before overwriting files")
 
 parser.add_argument("--report", choices=["json"], help="Output report format")
+report = apply_rules(
+        files,
+        rules_path,
+        dry_run=(args.command == "dry-run"),
+        backup=args.backup,
+        show_diff=args.diff
+    )
+
     parser.add_argument("--lang", required=True, help="Programming language (e.g. cpp, python)")
     parser.add_argument("--rule", required=True, help="Name of the ruleset (e.g. qt5to6)")
 
@@ -29,7 +37,8 @@ parser.add_argument("--report", choices=["json"], help="Output report format")
         files,
         rules_path,
         dry_run=(args.command == "dry-run"),
-        backup=args.backup
+        backup=args.backup,
+        show_diff=args.diff
     )
 
     # --- Summary output ---
